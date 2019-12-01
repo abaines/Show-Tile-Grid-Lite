@@ -1,0 +1,12 @@
+{
+    "name": "showTileGridLite",
+    "version": "0.0.1",
+    "title": "Show Tile Grid Lite",
+    "author": "Kizrak",
+    "contact": "",
+    "homepage": "https://github.com/abaines/TBD",
+    "factorio_version": "0.17",
+    "dependencies": ["base >= 0.17.79"],
+    "description": "TBD"
+}
+
