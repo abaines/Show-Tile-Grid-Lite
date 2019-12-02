@@ -5,6 +5,7 @@ data:extend({
 		default_value = true,
 		setting_type = "runtime-per-user",
 	},
+	-- runtime-global
 	{
 		type = "double-setting",
 		name = "show-tite-grid-width",

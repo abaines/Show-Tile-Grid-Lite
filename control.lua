@@ -16,7 +16,16 @@ local function on_chunk_generated(event)
 	local surface = event.surface
 	local left_top = area.left_top
 
-	makeGrid(left_top,0.1,0.001,{1,1,1,0.1},{1,1,1,0.9},surface)
+	local settings_length = settings.global["show-tite-grid-length"].value
+	local settings_width = settings.global["show-tite-grid-width"].value
+
+
+	local grey = 0.35
+	local color = {r=grey,g=grey,b=grey,a=0.35}
+	makeGrid(left_top,settings_length,settings_width,color,color,surface)
+
+	--local lt = { x = left_top.x+1, y = left_top.y+1 }
+	--makeGrid(lt,0.1,0.001,{r=1,g=1,b=1,a=0.1},{r=1,g=1,b=1,a=0.9},surface)
 end
 
 script.on_event({
