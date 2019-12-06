@@ -7,6 +7,6 @@
     "homepage": "https://github.com/abaines/Show-Tile-Grid-Lite",
     "factorio_version": "0.17",
     "dependencies": ["base >= 0.17.79"],
-    "description": "Simple less intrusive version of built-in debug settings `show-tile-grid` feature.\n\nUseful for radar, pollution, artillery fire, UPS, map generation, chunk-aligned trains, biter expansion, etc.\n\nAlso makes landmines tile aligned."
+    "description": "Simple less intrusive version of built-in debug settings `show-tile-grid` feature.\n\nUseful for radar, pollution, artillery fire, UPS, map generation, chunk-aligned trains, biter expansion, etc."
 }
 
