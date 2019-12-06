@@ -1,6 +1,18 @@
 -- Kizrak
 
 
+local function getPlayersToRenderFor()
+	local ret = {}
+
+	for i, player in pairs(game.players) do
+		local show_tite_grid_for_user = player.mod_settings["show-tite-grid-for-user"].value
+		if show_tite_grid_for_user=="Always" then
+			table.insert(ret, player)
+		end
+	end
+
+	return ret
+end
 
 local function makeGridForChunk(surface,left_top)
 	local x = left_top.x
@@ -18,8 +30,24 @@ local function makeGridForChunk(surface,left_top)
 
 	local o = settings_length -- offset
 
-	rendering.draw_line{from={x,y+o}, to={x,y-o}, surface=surface, color=s_color, width=settings_width}
-	rendering.draw_line{from={x+o,y}, to={x-o,y}, surface=surface, color=s_color, width=settings_width}
+	local players = getPlayersToRenderFor()
+
+	local settings_shape = settings.global["show-tite-grid-shape"].value
+
+	if #players > 0 then
+		if settings_shape == "Cross" then
+			rendering.draw_line{from={x,y+o}, to={x,y-o}, surface=surface, color=s_color, width=settings_width, players=players}
+			rendering.draw_line{from={x+o,y}, to={x-o,y}, surface=surface, color=s_color, width=settings_width, players=players}
+
+		elseif settings_shape == "Circle" then
+			settings_width = math.max(settings_width,0.001)
+			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=players}
+			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=players}
+
+		else
+			-- nothing???
+		end
+	end
 end
 
 

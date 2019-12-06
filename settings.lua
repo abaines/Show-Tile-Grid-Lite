@@ -1,9 +1,10 @@
 data:extend({
 	{
-		type = "bool-setting",
+		type = "string-setting",
 		name = "show-tite-grid-for-user",
-		default_value = true,
+		default_value = "Always",
 		setting_type = "runtime-per-user",
+		allowed_values = {"Always", "Never"},
 	},
 	-- runtime-global
 	{
@@ -21,6 +22,13 @@ data:extend({
 		minimum_value = 0,
 		maximum_value = 16,
 		setting_type = "runtime-global",
+	},
+	{
+		type = "string-setting",
+		name = "show-tite-grid-shape",
+		default_value = "Cross",
+		setting_type = "runtime-global",
+		allowed_values = {"Cross", "Circle"},
 	},
 	-- color
 	{
