@@ -6,18 +6,20 @@ local function makeGridForChunk(surface,left_top)
 	local x = left_top.x
 	local y = left_top.y
 
-	local grey = 0.35
-	local color = {r=grey,g=grey,b=grey,a=0.35}
-	local vcolor = color
-	local hcolor = color
+	local settings_color_r = settings.global["show-tite-grid-color-r"].value
+	local settings_color_g = settings.global["show-tite-grid-color-g"].value
+	local settings_color_b = settings.global["show-tite-grid-color-b"].value
+	local settings_color_a = settings.global["show-tite-grid-color-a"].value
+
+	local s_color = {r=settings_color_r,g=settings_color_g,b=settings_color_b,a=settings_color_a}
 
 	local settings_length = settings.global["show-tite-grid-length"].value
 	local settings_width = settings.global["show-tite-grid-width"].value
 
-	local o = settings_length
+	local o = settings_length -- offset
 
-	rendering.draw_line{from={x,y+o},to={x,y-o},surface=surface,color=vcolor,width=settings_width}
-	rendering.draw_line{from={x+o,y},to={x-o,y},surface=surface,color=hcolor,width=settings_width}
+	rendering.draw_line{from={x,y+o}, to={x,y-o}, surface=surface, color=s_color, width=settings_width}
+	rendering.draw_line{from={x+o,y}, to={x-o,y}, surface=surface, color=s_color, width=settings_width}
 end
 
 
@@ -40,16 +42,12 @@ local function redrawGrid()
 	rendering.clear("showTileGridLite")
 
 	for _, surface in pairs(game.surfaces) do
-		game.print(surface.name)
 		for chunk in surface.get_chunks() do
-			--game.print("x: " .. chunk.x .. ", y: " .. chunk.y)
 			local left_top = chunk.area.left_top
-			game.print("left_top: " .. serpent.line(left_top))
 			makeGridForChunk(surface,left_top)
 		end
 	end
 end
-
 
 local function on_runtime_mod_setting_changed(event)
 	local setting = event.setting -- string: The setting name that changed.
