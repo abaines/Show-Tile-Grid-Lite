@@ -1,3 +1,5 @@
+-- Kizrak
+
 data:extend({
 	{
 		type = "string-setting",
@@ -14,6 +16,7 @@ data:extend({
 		minimum_value = 0,
 		maximum_value = 32,
 		setting_type = "runtime-global",
+		order = "c-a",
 	},
 	{
 		type = "double-setting",
@@ -22,6 +25,7 @@ data:extend({
 		minimum_value = 0,
 		maximum_value = 16,
 		setting_type = "runtime-global",
+		order = "a-d",
 	},
 	{
 		type = "string-setting",
@@ -29,23 +33,26 @@ data:extend({
 		default_value = "Cross",
 		setting_type = "runtime-global",
 		allowed_values = {"Cross", "Circle"},
+		order = "a-b",
 	},
 	-- color
 	{
 		type = "double-setting",
 		name = "show-tite-grid-color-r",
-		default_value = 0.3,
+		default_value = 0.5,
 		minimum_value = 0,
 		maximum_value = 1,
 		setting_type = "runtime-global",
+		order = "b-color-1",
 	},
 	{
 		type = "double-setting",
 		name = "show-tite-grid-color-g",
-		default_value = 0.0,
+		default_value = 0.2,
 		minimum_value = 0,
 		maximum_value = 1,
 		setting_type = "runtime-global",
+		order = "b-color-2",
 	},
 	{
 		type = "double-setting",
@@ -54,6 +61,7 @@ data:extend({
 		minimum_value = 0,
 		maximum_value = 1,
 		setting_type = "runtime-global",
+		order = "b-color-3",
 	},
 	{
 		type = "double-setting",
@@ -62,6 +70,7 @@ data:extend({
 		minimum_value = 0,
 		maximum_value = 1,
 		setting_type = "runtime-global",
+		order = "b-color-4",
 	},
 })
 
