@@ -5,7 +5,7 @@ local function getPlayersToRenderFor()
 	local ret = {}
 
 	for i, player in pairs(game.players) do
-		local show_tite_grid_for_user = player.mod_settings["show-tite-grid-for-user"].value
+		local show_tite_grid_for_user = player.mod_settings["show-tile-grid-for-user"].value
 		if show_tite_grid_for_user=="Always" then
 			table.insert(ret, player)
 		end
@@ -18,21 +18,21 @@ local function makeGridForChunk(surface,left_top)
 	local x = left_top.x
 	local y = left_top.y
 
-	local settings_color_r = settings.global["show-tite-grid-color-r"].value
-	local settings_color_g = settings.global["show-tite-grid-color-g"].value
-	local settings_color_b = settings.global["show-tite-grid-color-b"].value
-	local settings_color_a = settings.global["show-tite-grid-color-a"].value
+	local settings_color_r = settings.global["show-tile-grid-color-r"].value
+	local settings_color_g = settings.global["show-tile-grid-color-g"].value
+	local settings_color_b = settings.global["show-tile-grid-color-b"].value
+	local settings_color_a = settings.global["show-tile-grid-color-a"].value
 
 	local s_color = {r=settings_color_r,g=settings_color_g,b=settings_color_b,a=settings_color_a}
 
-	local settings_length = settings.global["show-tite-grid-length"].value
-	local settings_width = settings.global["show-tite-grid-width"].value
+	local settings_length = settings.global["show-tile-grid-length"].value
+	local settings_width = settings.global["show-tile-grid-width"].value
 
 	local o = settings_length -- offset
 
 	local players = getPlayersToRenderFor()
 
-	local settings_shape = settings.global["show-tite-grid-shape"].value
+	local settings_shape = settings.global["show-tile-grid-shape"].value
 
 	if #players > 0 then
 		if settings_shape == "Cross" then
@@ -85,7 +85,7 @@ local function on_runtime_mod_setting_changed(event)
 		return str:sub(1, #start) == start
 	end
 
-	if starts_with(setting,"show-tite-grid-") then
+	if starts_with(setting,"show-tile-grid-") then
 		game.print(setting,{g=255})
 		redrawGrid()
 	else

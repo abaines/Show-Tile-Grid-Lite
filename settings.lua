@@ -3,7 +3,7 @@
 data:extend({
 	{
 		type = "string-setting",
-		name = "show-tite-grid-for-user",
+		name = "show-tile-grid-for-user",
 		default_value = "Always",
 		setting_type = "runtime-per-user",
 		allowed_values = {"Always", "Never"},
@@ -11,7 +11,7 @@ data:extend({
 	-- runtime-global
 	{
 		type = "double-setting",
-		name = "show-tite-grid-width",
+		name = "show-tile-grid-width",
 		default_value = 0.0,
 		minimum_value = 0,
 		maximum_value = 32,
@@ -20,7 +20,7 @@ data:extend({
 	},
 	{
 		type = "double-setting",
-		name = "show-tite-grid-length",
+		name = "show-tile-grid-length",
 		default_value = 1,
 		minimum_value = 0,
 		maximum_value = 16,
@@ -29,7 +29,7 @@ data:extend({
 	},
 	{
 		type = "string-setting",
-		name = "show-tite-grid-shape",
+		name = "show-tile-grid-shape",
 		default_value = "Cross",
 		setting_type = "runtime-global",
 		allowed_values = {"Cross", "Circle"},
@@ -38,7 +38,7 @@ data:extend({
 	-- color
 	{
 		type = "double-setting",
-		name = "show-tite-grid-color-r",
+		name = "show-tile-grid-color-r",
 		default_value = 0.5,
 		minimum_value = 0,
 		maximum_value = 1,
@@ -47,7 +47,7 @@ data:extend({
 	},
 	{
 		type = "double-setting",
-		name = "show-tite-grid-color-g",
+		name = "show-tile-grid-color-g",
 		default_value = 0.2,
 		minimum_value = 0,
 		maximum_value = 1,
@@ -56,7 +56,7 @@ data:extend({
 	},
 	{
 		type = "double-setting",
-		name = "show-tite-grid-color-b",
+		name = "show-tile-grid-color-b",
 		default_value = 0.0,
 		minimum_value = 0,
 		maximum_value = 1,
@@ -65,7 +65,7 @@ data:extend({
 	},
 	{
 		type = "double-setting",
-		name = "show-tite-grid-color-a",
+		name = "show-tile-grid-color-a",
 		default_value = 0.0,
 		minimum_value = 0,
 		maximum_value = 1,
