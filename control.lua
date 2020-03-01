@@ -102,3 +102,12 @@ script.on_event({
 	defines.events.on_runtime_mod_setting_changed
 },on_runtime_mod_setting_changed)
 
+
+
+
+--[[
+TODO:
+https://mods.factorio.com/mod/showTileGridLite/discussion/5e1060d620bee9000d7d37ea
+Could you please move the turn on/ turn off function from player settings into a shortcut?
+]]--
+
