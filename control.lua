@@ -1,7 +1,7 @@
 -- Kizrak
 
 
-local sb = serpent.block
+local sb = serpent.block -- luacheck: ignore 211
 
 
 local function getPlayersToRenderFor()
@@ -48,7 +48,7 @@ local function makeGridForChunk(surface,left_top)
 			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=players}
 			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=players}
 
-		else
+		else -- luacheck: ignore 542
 			-- nothing???
 		end
 	end
@@ -57,7 +57,7 @@ end
 
 local function on_chunk_generated(event)
 	local area = event.area
-	local chunkPosition = event.position
+	--local chunkPosition = event.position
 	local surface = event.surface
 	local left_top = area.left_top
 
