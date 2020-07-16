@@ -10,8 +10,8 @@ local function checkPlayerCursor(player)
 end
 
 local importantTypes = {
-	radar = true,
-	roboport = true,
+	["radar"] = true,
+	["roboport"] = true,
 	["electric-pole"] = true,
 	["straight-rail"] = true,
 	["curved-rail"] = true,
@@ -22,12 +22,16 @@ local importantTypes = {
 	["train-stop"] = true,
 	["rail-signal"] = true,
 	["rail-chain-signal"] = true,
-	["rail-chain-signal"] = true,
 }
 
 local function isSelectedImportant(player)
 	if player.selected and player.selected.valid then
 		local selected_type = player.selected.type
+
+		if selected_type == "entity-ghost" then
+			selected_type = player.selected.ghost_type
+		end
+
 		local isImportant = importantTypes[selected_type]
 		return isImportant
 	end
