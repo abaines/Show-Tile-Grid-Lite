@@ -5,7 +5,7 @@ local sb = serpent.block -- luacheck: ignore 211
 
 
 local function checkPlayerCursor(player)
-	return player.cursor_stack.valid_for_read
+	return player.cursor_stack.valid_for_read or (player.cursor_ghost and player.cursor_ghost.valid)
 end
 
 local function getPlayersToRenderFor()
