@@ -18,7 +18,7 @@ local function getPlayersToRenderFor()
 end
 
 
-local function makeGridForChunk(surface,left_top)
+local function makeGridForChunk(playersToRenders,surface,left_top)
 	local x = left_top.x
 	local y = left_top.y
 
@@ -34,19 +34,17 @@ local function makeGridForChunk(surface,left_top)
 
 	local o = settings_length -- offset
 
-	local players = getPlayersToRenderFor()
-
 	local settings_shape = settings.global["show-tile-grid-shape"].value
 
-	if #players > 0 then
+	if #playersToRenders > 0 then
 		if settings_shape == "Cross" then
-			rendering.draw_line{from={x,y+o}, to={x,y-o}, surface=surface, color=s_color, width=settings_width, players=players}
-			rendering.draw_line{from={x+o,y}, to={x-o,y}, surface=surface, color=s_color, width=settings_width, players=players}
+			rendering.draw_line{from={x,y+o}, to={x,y-o}, surface=surface, color=s_color, width=settings_width, players=playersToRenders}
+			rendering.draw_line{from={x+o,y}, to={x-o,y}, surface=surface, color=s_color, width=settings_width, players=playersToRenders}
 
 		elseif settings_shape == "Circle" then
 			settings_width = math.max(settings_width,0.001)
-			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=players}
-			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=players}
+			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=playersToRenders}
+			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=playersToRenders}
 
 		else -- luacheck: ignore 542
 			-- nothing???
@@ -61,7 +59,9 @@ local function on_chunk_generated(event)
 	local surface = event.surface
 	local left_top = area.left_top
 
-	makeGridForChunk(surface,left_top)
+	local playersToRenders = getPlayersToRenderFor()
+
+	makeGridForChunk(playersToRenders,surface,left_top)
 end
 
 script.on_event({
@@ -73,10 +73,12 @@ script.on_event({
 local function redrawGrid()
 	rendering.clear("showTileGridLite")
 
+	local playersToRenders = getPlayersToRenderFor()
+
 	for _, surface in pairs(game.surfaces) do
 		for chunk in surface.get_chunks() do
 			local left_top = chunk.area.left_top
-			makeGridForChunk(surface,left_top)
+			makeGridForChunk(playersToRenders,surface,left_top)
 		end
 	end
 end
