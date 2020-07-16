@@ -112,7 +112,7 @@ script.on_event({
 },on_runtime_mod_setting_changed)
 
 
-local function on_player_cursor_stack_changed(event)
+local function on_player_cursor_stack_changed()
 	redrawGrid()
 end
 
