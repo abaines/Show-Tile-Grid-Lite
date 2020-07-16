@@ -113,7 +113,6 @@ script.on_event({
 
 
 local function on_player_cursor_stack_changed(event)
-	local player = game.players[event.player_index]
 	redrawGrid()
 end
 
