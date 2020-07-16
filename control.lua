@@ -9,6 +9,30 @@ local function checkPlayerCursor(player)
 	return hasSomethingOnCursor
 end
 
+local importantTypes = {
+	radar = true,
+	roboport = true,
+	["electric-pole"] = true,
+	["straight-rail"] = true,
+	["curved-rail"] = true,
+	["locomotive"] = true,
+	["cargo-wagon"] = true,
+	["fluid-wagon"] = true,
+	["artillery-wagon"] = true,
+	["train-stop"] = true,
+	["rail-signal"] = true,
+	["rail-chain-signal"] = true,
+	["rail-chain-signal"] = true,
+}
+
+local function isSelectedImportant(player)
+	if player.selected and player.selected.valid then
+		local selected_type = player.selected.type
+		local isImportant = importantTypes[selected_type]
+		return isImportant
+	end
+end
+
 local function getPlayersToRenderFor()
 	local ret = {}
 
@@ -17,6 +41,8 @@ local function getPlayersToRenderFor()
 		if show_tite_grid_for_user=="Always" then
 			table.insert(ret, player)
 		elseif show_tite_grid_for_user=="Auto" and checkPlayerCursor(player) then
+			table.insert(ret, player)
+		elseif show_tite_grid_for_user=="Auto" and isSelectedImportant(player) then
 			table.insert(ret, player)
 		end
 	end
@@ -119,6 +145,16 @@ end
 script.on_event({
 	defines.events.on_player_cursor_stack_changed
 },on_player_cursor_stack_changed)
+
+
+local function on_selected_entity_changed()
+	redrawGrid()
+end
+
+script.on_event({
+	defines.events.on_selected_entity_changed
+},on_selected_entity_changed)
+
 
 
 -- TODO: Event request: on_player_cursor_ghost_changed
