@@ -4,12 +4,18 @@
 local sb = serpent.block -- luacheck: ignore 211
 
 
+local function checkPlayerCursor(player)
+	return player.cursor_stack.valid_for_read
+end
+
 local function getPlayersToRenderFor()
 	local ret = {}
 
 	for i, player in pairs(game.players) do
 		local show_tite_grid_for_user = player.mod_settings["show-tile-grid-for-user"].value
 		if show_tite_grid_for_user=="Always" then
+			table.insert(ret, player)
+		elseif show_tite_grid_for_user=="Auto" and checkPlayerCursor(player) then
 			table.insert(ret, player)
 		end
 	end
@@ -104,6 +110,15 @@ script.on_event({
 	defines.events.on_runtime_mod_setting_changed
 },on_runtime_mod_setting_changed)
 
+
+local function on_player_cursor_stack_changed(event)
+	local player = game.players[event.player_index]
+	redrawGrid()
+end
+
+script.on_event({
+	defines.events.on_player_cursor_stack_changed
+},on_player_cursor_stack_changed)
 
 
 
