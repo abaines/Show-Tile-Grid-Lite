@@ -3,6 +3,11 @@
 
 local sb = serpent.block -- luacheck: ignore 211
 
+local function sbs(obj)  -- luacheck: ignore 211
+	local s = sb( obj ):gsub("%s+", " ")
+	return s
+end
+
 
 local function checkPlayerCursor(player)
 	local hasSomethingOnCursor = player.cursor_stack.valid_for_read or (player.cursor_ghost and player.cursor_ghost.valid)
@@ -107,7 +112,9 @@ script.on_event({
 
 
 
-local function redrawGrid()
+local function redrawGrid(reason)
+	log("redrawGrid("..reason..")")
+
 	rendering.clear("showTileGridLite")
 
 	local playersToRenders = getPlayersToRenderFor()
@@ -133,7 +140,7 @@ local function on_runtime_mod_setting_changed(event)
 	if starts_with(setting,"show-tile-grid-") then
 		log(player.name .. " > " .. setting_type .. " > " .. setting)
 
-		redrawGrid()
+		redrawGrid("on_runtime_mod_setting_changed:"..player.name)
 	end
 end
 
@@ -153,7 +160,7 @@ local function on_selected_entity_changed(event)
 		local selectedImportant = isSelectedImportant(player)
 
 		if global.player_selected_entity_data[player.index] ~= selectedImportant then
-			redrawGrid()
+			redrawGrid("on_selected_entity_changed:"..player.name)
 		end
 
 		global.player_selected_entity_data[player.index] = selectedImportant
@@ -171,7 +178,7 @@ script.on_event({
 -- https://forums.factorio.com/viewtopic.php?f=28&t=68630
 local function on_tick()
 	global.player_cursor_tick_data = global.player_cursor_tick_data or {}
-	local needRedraw = false
+	local needRedraw = {}
 
 	for i, player in pairs(game.players) do
 		local hasSomethingOnCursor = checkPlayerCursor(player)
@@ -179,16 +186,15 @@ local function on_tick()
 		if global.player_cursor_tick_data[player.index] ~= hasSomethingOnCursor then
 			local show_tite_grid_for_user = player.mod_settings["show-tile-grid-for-user"].value
 			if show_tite_grid_for_user=="Auto" then
-				needRedraw = true
+				table.insert(needRedraw, player.name)
 			end
 		end
 
 		global.player_cursor_tick_data[player.index] = hasSomethingOnCursor
 	end
 
-	if needRedraw then
-		log("events.on_tick redrawGrid()")
-		redrawGrid()
+	if #needRedraw > 0 then
+		redrawGrid("events.on_tick:"..sbs(needRedraw))
 	end
 end
 
@@ -197,6 +203,8 @@ script.on_event({
 },on_tick)
 
 
+-- TODO: events.on_tick always seems to happen before this event, making all of this useless until event API changed
+-- https://forums.factorio.com/viewtopic.php?f=28&t=68630
 local function on_player_cursor_stack_changed(event)
 	local player = game.players[event.player_index]
 	local show_tite_grid_for_user = player.mod_settings["show-tile-grid-for-user"].value
@@ -206,7 +214,7 @@ local function on_player_cursor_stack_changed(event)
 		local hasSomethingOnCursor = checkPlayerCursor(player)
 
 		if global.player_cursor_tick_data[player.index] ~= hasSomethingOnCursor then
-			redrawGrid()
+			redrawGrid("on_player_cursor_stack_changed:"..player.name)
 		end
 
 		global.player_cursor_tick_data[player.index] = hasSomethingOnCursor
