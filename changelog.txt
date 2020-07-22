@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.14
+Date: 2020-07-22
+  Changes:
+    - Make "Always" the default again for performance reasons.
+    - Added tooltip warning in settings that using "Auto" mode has performance implications.
+    - Added lots of performance improvements, to what is possible (in single player).
+    - If not using "Auto" mode the performance should be back to 0.3.13 levels.
+    - Mod should now only cause a lag spike when rendering *must* actually change. Limitation of Factorio API.
+    - Previously would lag spike during any event that *could* cause a rendering change. My fault. Sorry!
+    - Minor improvements to setting tooltips.
+    - Improved logging related to performance.
+---------------------------------------------------------------------------------------------------
 Version: 0.3.13
 Date: 2020-07-16
   Changes:
