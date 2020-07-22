@@ -4,7 +4,7 @@ data:extend({
 	{
 		type = "string-setting",
 		name = "show-tile-grid-for-user",
-		default_value = "Auto",
+		default_value = "Always",
 		setting_type = "runtime-per-user",
 		allowed_values = {"Always", "Auto", "Never"},
 	},
