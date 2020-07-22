@@ -142,17 +142,23 @@ script.on_event({
 },on_runtime_mod_setting_changed)
 
 
-local function on_player_cursor_stack_changed()
-	redrawGrid()
-end
+local function on_selected_entity_changed(event)
+	local player = game.players[event.player_index]
+	local show_tite_grid_for_user = player.mod_settings["show-tile-grid-for-user"].value
 
-script.on_event({
-	defines.events.on_player_cursor_stack_changed
-},on_player_cursor_stack_changed)
+	if show_tite_grid_for_user=="Auto" then
 
+		global.player_selected_entity_data = global.player_selected_entity_data or {}
 
-local function on_selected_entity_changed()
-	redrawGrid()
+		local selectedImportant = isSelectedImportant(player)
+
+		if global.player_selected_entity_data[player.index] ~= selectedImportant then
+			redrawGrid()
+		end
+
+		global.player_selected_entity_data[player.index] = selectedImportant
+
+	end
 end
 
 script.on_event({
@@ -161,7 +167,7 @@ script.on_event({
 
 
 
--- TODO: Event request: on_player_cursor_ghost_changed
+-- TODO: Event request: on_player_cursor_ghost_changed or on_player_cursor_stack_changed
 -- https://forums.factorio.com/viewtopic.php?f=28&t=68630
 local function on_tick()
 	global.player_cursor_tick_data = global.player_cursor_tick_data or {}
@@ -189,6 +195,27 @@ end
 script.on_event({
 	defines.events.on_tick
 },on_tick)
+
+
+local function on_player_cursor_stack_changed(event)
+	local player = game.players[event.player_index]
+	local show_tite_grid_for_user = player.mod_settings["show-tile-grid-for-user"].value
+	if show_tite_grid_for_user=="Auto" then
+		global.player_cursor_tick_data = global.player_cursor_tick_data or {}
+
+		local hasSomethingOnCursor = checkPlayerCursor(player)
+
+		if global.player_cursor_tick_data[player.index] ~= hasSomethingOnCursor then
+			redrawGrid()
+		end
+
+		global.player_cursor_tick_data[player.index] = hasSomethingOnCursor
+	end
+end
+
+script.on_event({
+	defines.events.on_player_cursor_stack_changed
+},on_player_cursor_stack_changed)
 
 
 
