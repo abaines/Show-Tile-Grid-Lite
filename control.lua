@@ -128,6 +128,7 @@ end
 
 
 local function on_runtime_mod_setting_changed(event)
+	if not event.player_index then return end
 	local setting = event.setting -- string: The setting name that changed.
 	local setting_type = event.setting_type -- string: The setting type: "runtime-per-user", or "runtime-global".
 	local player = game.players[event.player_index]
