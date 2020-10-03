@@ -86,10 +86,9 @@ local function makeGridForChunk(playersToRenders,surface,left_top)
 		elseif settings_shape == "Circle" then
 			settings_width = math.max(settings_width,0.001)
 			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=playersToRenders}
-			rendering.draw_circle{target={x,y}, surface=surface, color=s_color, radius=settings_length, width=settings_width, players=playersToRenders}
 
-		else -- luacheck: ignore 542
-			-- nothing???
+		else
+			log("unknown shape: " .. settings_shape)
 		end
 	end
 end
