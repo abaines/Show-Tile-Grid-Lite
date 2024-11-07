@@ -15,18 +15,18 @@ local function checkPlayerCursor(player)
 end
 
 local importantTypes = {
-    ["radar"] = true,
-    ["roboport"] = true,
-    ["electric-pole"] = true,
-    ["straight-rail"] = true,
-    ["curved-rail"] = true,
-    ["locomotive"] = true,
-    ["cargo-wagon"] = true,
-    ["fluid-wagon"] = true,
     ["artillery-wagon"] = true,
-    ["train-stop"] = true,
+    ["cargo-wagon"] = true,
+    ["curved-rail"] = true,
+    ["electric-pole"] = true,
+    ["fluid-wagon"] = true,
+    ["locomotive"] = true,
+    ["radar"] = true,
+    ["rail-chain-signal"] = true,
     ["rail-signal"] = true,
-    ["rail-chain-signal"] = true
+    ["roboport"] = true,
+    ["straight-rail"] = true,
+    ["train-stop"] = true
 }
 
 local function isSelectedImportant(player)
