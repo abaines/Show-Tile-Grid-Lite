@@ -14,12 +14,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - name: Factorio Mod luacheck
-      uses: Roang-zero1/factorio-mod-luacheck@v1.1.0
+    - uses: lunarmodules/luacheck@v1.2.0
 
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
 
     - name: Check Python and OS Setup
       run: |
@@ -28,13 +29,14 @@ jobs:
 
     - run: |
         python zipper.py
+        mv ../*.zip .
 
     - name: Calculate Artifact File Name
       id: getfilename
-      run: echo "::set-output name=file::$(ls ../*.zip)"
+      run: echo "::set-output name=file::$(ls *.zip)"
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: artifact
         path: ${{ steps.getfilename.outputs.file }}
