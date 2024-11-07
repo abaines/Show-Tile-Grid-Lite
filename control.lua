@@ -42,19 +42,24 @@ local function isSelectedImportant(player)
     end
 end
 
+local function parse_show_tile_grid_setting(ret, player)
+    local show_tile_grid_setting =
+    player.mod_settings["show-tile-grid-for-user"].value
+
+    if show_tile_grid_setting == "Always" then
+        table.insert(ret, player)
+    elseif show_tile_grid_setting == "Auto" and checkPlayerCursor(player) then
+        table.insert(ret, player)
+    elseif show_tile_grid_setting == "Auto" and isSelectedImportant(player) then
+        table.insert(ret, player)
+    end
+end
+
 local function getPlayersToRenderFor()
     local ret = {}
 
     for i, player in pairs(game.players) do
-        local show_tite_grid_for_user =
-            player.mod_settings["show-tile-grid-for-user"].value
-        if show_tite_grid_for_user == "Always" then
-            table.insert(ret, player)
-        elseif show_tite_grid_for_user == "Auto" and checkPlayerCursor(player) then
-            table.insert(ret, player)
-        elseif show_tite_grid_for_user == "Auto" and isSelectedImportant(player) then
-            table.insert(ret, player)
-        end
+        parse_show_tile_grid_setting(ret, player)
     end
 
     return ret
