@@ -12,6 +12,7 @@ std = {
         "mods",
         "pairs",
         "prototypes",
+        "rendering",
         "require",
         "script",
         "serpent",
