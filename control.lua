@@ -58,7 +58,7 @@ end
 local function getPlayersToRenderFor()
     local ret = {}
 
-    for _i, player in pairs(game.players) do
+    for _, player in pairs(game.players) do
         parse_show_tile_grid_setting(ret, player)
     end
 
@@ -205,7 +205,7 @@ local function on_tick()
     storage.player_cursor_tick_data = storage.player_cursor_tick_data or {}
     local needRedraw = {}
 
-    for i, player in pairs(game.players) do
+    for _, player in pairs(game.players) do
         local hasSomethingOnCursor = checkPlayerCursor(player)
 
         if storage.player_cursor_tick_data[player.index] ~= hasSomethingOnCursor then
