@@ -58,7 +58,7 @@ end
 local function getPlayersToRenderFor()
     local ret = {}
 
-    for i, player in pairs(game.players) do
+    for _i, player in pairs(game.players) do
         parse_show_tile_grid_setting(ret, player)
     end
 
@@ -81,8 +81,12 @@ local function makeGridForChunk(playersToRenders, surface, left_top)
         a = settings_color_a
     }
 
-    local settings_length = settings.global["show-tile-grid-length"].value
-    local settings_width = settings.global["show-tile-grid-width"].value
+    local settings_length = assert(tonumber(
+                                       settings.global["show-tile-grid-length"]
+                                           .value))
+    local settings_width = assert(tonumber(
+                                      settings.global["show-tile-grid-width"]
+                                          .value))
 
     local o = settings_length -- offset
 
@@ -177,16 +181,17 @@ local function on_selected_entity_changed(event)
 
     if show_tite_grid_for_user == "Auto" then
 
-        global.player_selected_entity_data =
-            global.player_selected_entity_data or {}
+        storage.player_selected_entity_data =
+            storage.player_selected_entity_data or {}
 
         local selectedImportant = isSelectedImportant(player)
 
-        if global.player_selected_entity_data[player.index] ~= selectedImportant then
+        if storage.player_selected_entity_data[player.index] ~=
+            selectedImportant then
             redrawGrid("on_selected_entity_changed:" .. player.name)
         end
 
-        global.player_selected_entity_data[player.index] = selectedImportant
+        storage.player_selected_entity_data[player.index] = selectedImportant
 
     end
 end
@@ -197,13 +202,13 @@ script.on_event({defines.events.on_selected_entity_changed},
 -- TODO: Event request: on_player_cursor_ghost_changed or on_player_cursor_stack_changed
 -- https://forums.factorio.com/viewtopic.php?f=28&t=68630
 local function on_tick()
-    global.player_cursor_tick_data = global.player_cursor_tick_data or {}
+    storage.player_cursor_tick_data = storage.player_cursor_tick_data or {}
     local needRedraw = {}
 
     for i, player in pairs(game.players) do
         local hasSomethingOnCursor = checkPlayerCursor(player)
 
-        if global.player_cursor_tick_data[player.index] ~= hasSomethingOnCursor then
+        if storage.player_cursor_tick_data[player.index] ~= hasSomethingOnCursor then
             local show_tite_grid_for_user =
                 player.mod_settings["show-tile-grid-for-user"].value
             if show_tite_grid_for_user == "Auto" then
@@ -211,7 +216,7 @@ local function on_tick()
             end
         end
 
-        global.player_cursor_tick_data[player.index] = hasSomethingOnCursor
+        storage.player_cursor_tick_data[player.index] = hasSomethingOnCursor
     end
 
     if #needRedraw > 0 then redrawGrid("events.on_tick:" .. sbs(needRedraw)) end
@@ -226,15 +231,15 @@ local function on_player_cursor_stack_changed(event)
     local show_tite_grid_for_user =
         player.mod_settings["show-tile-grid-for-user"].value
     if show_tite_grid_for_user == "Auto" then
-        global.player_cursor_tick_data = global.player_cursor_tick_data or {}
+        storage.player_cursor_tick_data = storage.player_cursor_tick_data or {}
 
         local hasSomethingOnCursor = checkPlayerCursor(player)
 
-        if global.player_cursor_tick_data[player.index] ~= hasSomethingOnCursor then
+        if storage.player_cursor_tick_data[player.index] ~= hasSomethingOnCursor then
             redrawGrid("on_player_cursor_stack_changed:" .. player.name)
         end
 
-        global.player_cursor_tick_data[player.index] = hasSomethingOnCursor
+        storage.player_cursor_tick_data[player.index] = hasSomethingOnCursor
     end
 end
 
