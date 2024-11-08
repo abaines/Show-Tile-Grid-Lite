@@ -7,11 +7,15 @@ local function sbs(obj) -- luacheck: ignore 211
 end
 
 local function checkPlayerCursor(player)
-    local hasSomethingOnCursor = (player.cursor_stack and
-                                     player.cursor_stack.valid_for_read) or
-                                     (player.cursor_ghost and
-                                         player.cursor_ghost.valid)
-    return hasSomethingOnCursor
+    if player.cursor_stack and player.cursor_stack.valid_for_read then
+        log(player.cursor_stack.valid_for_read)
+        return player.cursor_stack.valid_for_read
+    elseif player.cursor_ghost and player.cursor_ghost.valid then
+        log(player.cursor_ghost.valid)
+        return player.cursor_ghost.valid
+    end
+
+    log("checkPlayerCursor nothing")
 end
 
 local importantTypes = {
@@ -32,6 +36,7 @@ local importantTypes = {
 local function isSelectedImportant(player)
     if player.selected and player.selected.valid then
         local selected_type = player.selected.type
+        log(player .. selected_type)
 
         if selected_type == "entity-ghost" then
             selected_type = player.selected.ghost_type
@@ -44,7 +49,7 @@ end
 
 local function parse_show_tile_grid_setting(ret, player)
     local show_tile_grid_setting =
-    player.mod_settings["show-tile-grid-for-user"].value
+        player.mod_settings["show-tile-grid-for-user"].value
 
     if show_tile_grid_setting == "Always" then
         table.insert(ret, player)
@@ -199,6 +204,7 @@ end
 script.on_event({defines.events.on_selected_entity_changed},
                 on_selected_entity_changed)
 
+--[[
 -- TODO: Event request: on_player_cursor_ghost_changed or on_player_cursor_stack_changed
 -- https://forums.factorio.com/viewtopic.php?f=28&t=68630
 local function on_tick()
@@ -212,6 +218,7 @@ local function on_tick()
             local show_tite_grid_for_user =
                 player.mod_settings["show-tile-grid-for-user"].value
             if show_tite_grid_for_user == "Auto" then
+				log(storage.player_cursor_tick_data[player.index])
                 table.insert(needRedraw, player.name)
             end
         end
@@ -223,16 +230,19 @@ local function on_tick()
 end
 
 script.on_event({defines.events.on_tick}, on_tick)
+]] --
 
 -- TODO: events.on_tick always seems to happen before this event, making all of this useless until event API changed
 -- https://forums.factorio.com/viewtopic.php?f=28&t=68630
 local function on_player_cursor_stack_changed(event)
+    storage.player_cursor_tick_data = storage.player_cursor_tick_data or {}
+
     local player = game.players[event.player_index]
     local show_tite_grid_for_user =
         player.mod_settings["show-tile-grid-for-user"].value
-    if show_tite_grid_for_user == "Auto" then
-        storage.player_cursor_tick_data = storage.player_cursor_tick_data or {}
 
+    if show_tite_grid_for_user == "Auto" then
+        log('auto')
         local hasSomethingOnCursor = checkPlayerCursor(player)
 
         if storage.player_cursor_tick_data[player.index] ~= hasSomethingOnCursor then
@@ -241,6 +251,7 @@ local function on_player_cursor_stack_changed(event)
 
         storage.player_cursor_tick_data[player.index] = hasSomethingOnCursor
     end
+    log("on_player_cursor_stack_changed!" .. show_tite_grid_for_user)
 end
 
 script.on_event({defines.events.on_player_cursor_stack_changed},

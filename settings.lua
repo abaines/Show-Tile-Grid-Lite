@@ -1,10 +1,11 @@
 -- Kizrak
 
 data:extend({
+	-- runtime-per-user
 	{
 		type = "string-setting",
 		name = "show-tile-grid-for-user",
-		default_value = "Always",
+		default_value = "Auto",
 		setting_type = "runtime-per-user",
 		allowed_values = {"Always", "Auto", "Never"},
 	},
