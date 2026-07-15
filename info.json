@@ -1,13 +1,13 @@
 {
 	"name": "showTileGridLite",
-	"version": "0.5.22",
+	"version": "0.6.23",
 	"title": "Show Tile Grid Lite",
 	"author": "Kizrak",
 	"contact": "",
 	"homepage": "https://github.com/abaines/Show-Tile-Grid-Lite",
-	"factorio_version": "2.0",
+	"factorio_version": "2.1",
 	"dependencies": [
-		"base >= 2.0.14"
+		"base >= 2.1.11"
 	],
 	"description": "Simple less intrusive version of built-in debug settings `show-tile-grid` feature.\n\nUseful for radar, pollution, artillery fire, UPS, map generation, chunk-aligned trains, biter expansion, etc."
 }
