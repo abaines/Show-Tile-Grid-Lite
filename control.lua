@@ -36,7 +36,7 @@ local importantTypes = {
 local function isSelectedImportant(player)
     if player.selected and player.selected.valid then
         local selected_type = player.selected.type
-        log(player .. selected_type)
+        log(player.name .. selected_type)
 
         if selected_type == "entity-ghost" then
             selected_type = player.selected.ghost_type
